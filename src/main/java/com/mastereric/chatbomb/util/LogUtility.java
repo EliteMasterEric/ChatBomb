@@ -3,11 +3,9 @@ package com.mastereric.chatbomb.util;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
-/**
- * Created by eric on 2/27/2017.
- */
+
 public class LogUtility {
-    private static final String TAG = "M.E.T.A.";
+    private static final String TAG = "ChatBomb";
 
     public static void warn(String format, Object... data) {
         FMLLog.log(TAG, Level.WARN, format, data);

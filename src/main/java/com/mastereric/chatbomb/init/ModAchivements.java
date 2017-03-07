@@ -1,11 +1,15 @@
 package com.mastereric.chatbomb.init;
 
+import com.mastereric.chatbomb.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.stats.Achievement;
 
 public class ModAchivements {
+    public static Achievement activateBomb;
+
     public static void initializeAchievements() {
+        activateBomb = createAchievement(Reference.NAME_ACHIEVEMENT_ACTIVATE_BOMB, 0, 0, ModBlocks.itemBlockChatBomb);
     }
 
     private static Achievement createAchievement(String name, int xPos, int yPos, Item icon) {

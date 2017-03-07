@@ -1,5 +1,7 @@
 package com.mastereric.chatbomb.proxy;
 
+import com.mastereric.chatbomb.init.ModBlocks;
+import com.mastereric.chatbomb.init.ModEntities;
 import com.mastereric.chatbomb.util.LogUtility;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,6 +15,7 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 	    super.preInit(event);
 		LogUtility.info("Performing client initialization.");
-		//MinecraftForge.EVENT_BUS.register(new ParticleClientEventHandler());
+		ModBlocks.initializeBlockModels();
+        ModEntities.initializeEntityModels();
 	}
 }

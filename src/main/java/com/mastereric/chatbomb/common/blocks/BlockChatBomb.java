@@ -1,31 +1,37 @@
 package com.mastereric.chatbomb.common.blocks;
 
+import com.mastereric.chatbomb.common.tile.TileChatBomb;
 import mcjty.lib.compat.CompatBlock;
+import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityTNTPrimed;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockChatBomb extends CompatBlock {
-    public static final PropertyBool EXPLODE = PropertyBool.create("explode");
+import javax.annotation.Nullable;
+
+public class BlockChatBomb extends CompatBlock implements ITileEntityProvider {
 
     public BlockChatBomb() {
         super(Material.TNT);
+        setHardness(0.0F);
+        setSoundType(SoundType.PLANT);
     }
 
-    public void explode(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase igniter) {
-        if (!worldIn.isRemote) {
-            if (((Boolean)state.getValue(EXPLODE)).booleanValue()) {
-                EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(worldIn, (double)((float)pos.getX() + 0.5F), (double)pos.getY(), (double)((float)pos.getZ() + 0.5F), igniter);
-                worldIn.spawnEntity(entitytntprimed);
-                worldIn.playSound((EntityPlayer)null, entitytntprimed.posX, entitytntprimed.posY, entitytntprimed.posZ, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+    public void trigger(World worldIn, BlockPos pos, EntityLivingBase igniter, String triggerWord) {
+        TileEntity entity = worldIn.getTileEntity(pos);
+        if (entity instanceof TileChatBomb) {
+            if (!((TileChatBomb) entity).hasTriggered()) {
+                ((TileChatBomb) entity).trigger(igniter, triggerWord);
             }
         }
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        return new TileChatBomb();
     }
 }

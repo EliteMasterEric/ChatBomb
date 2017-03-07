@@ -1,8 +1,8 @@
 [
 {
   "modid": "chatbomb",
-  "name": "ChatBomb",
-  "description": "Adds a variant of TNT activated with a command in chat.",
+  "name": "Chat Bomb",
+  "description": "Adds a variant of TNT activated by saying key phrases in chat.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",

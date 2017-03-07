@@ -1,0 +1,15 @@
+#PARSE_ESCAPES
+itemGroup.chatbomb=Chat Bomb
+
+tile.chatbomb.chat_bomb.name=Chat Bomb
+tile.chatbomb.chat_bomb.desc=Watch your words near this thing...
+
+chat.chatbomb.name=ChatBomb
+chat.chatbomb.chat_bomb_response=Did somebody say §l§4%%s§r?
+
+entity.chat_bomb.name=Chat Bomb
+
+achievements.chatbomb=Chat Bomb
+
+achievement.chatbomb.activate_bomb=Explosive Personality
+achievement.chatbomb.activate_bomb.desc=Detonate a Chat Bomb.

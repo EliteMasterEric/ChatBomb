@@ -7,12 +7,13 @@ import net.minecraftforge.common.config.Configuration;
 public class ModConfig {
     public static Configuration config;
 
+    public static boolean VERBOSE = true;
+
     private static final String CATEGORY_GENERAL = "general";
     private static final String CATEGORY_GENERAL_DESC = "General configuration";
 
-    public static boolean MOD_IDEA_190 = false;
-    private static String MOD_IDEA_190_NAME = "mod_idea_190";
-    private static String MOD_IDEA_190_DESC = "The mods created by the Mod Maker will no longer be usable by the M.E.T.A.";
+    private static final String VERBOSE_NAME = "verbose";
+    private static final String VERBOSE_DESC = "Does ChatBomb respond to the player?";
 
     public static void parseConfig() {
         if (config != null) {
@@ -35,6 +36,6 @@ public class ModConfig {
 
     private static void parseConfigGeneral() {
         config.addCustomCategoryComment(CATEGORY_GENERAL, CATEGORY_GENERAL_DESC);
-        MOD_IDEA_190 = config.getBoolean(MOD_IDEA_190_NAME, CATEGORY_GENERAL, MOD_IDEA_190, MOD_IDEA_190_DESC);
+        VERBOSE = config.getBoolean(VERBOSE_NAME, CATEGORY_GENERAL, VERBOSE, VERBOSE_DESC);
     }
 }

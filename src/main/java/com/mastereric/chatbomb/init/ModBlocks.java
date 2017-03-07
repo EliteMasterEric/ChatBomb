@@ -4,6 +4,7 @@ import com.mastereric.chatbomb.ChatBomb;
 import com.mastereric.chatbomb.Reference;
 import com.mastereric.chatbomb.common.blocks.BlockChatBomb;
 import com.mastereric.chatbomb.common.items.ItemBlockDesc;
+import com.mastereric.chatbomb.common.tile.TileChatBomb;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -23,6 +24,7 @@ public final class ModBlocks {
         blockChatBomb = new BlockChatBomb();
         itemBlockChatBomb = new ItemBlockDesc(blockChatBomb);
         registerBlock(blockChatBomb, Reference.NAME_BLOCK_CHAT_BOMB, itemBlockChatBomb);
+        registerTileEntity(TileChatBomb.class, Reference.NAME_BLOCK_CHAT_BOMB);
     }
 
     @SideOnly(Side.CLIENT)

@@ -2,9 +2,7 @@ package com.mastereric.chatbomb.proxy;
 
 import com.mastereric.chatbomb.common.stats.AchievementHandler;
 import com.mastereric.chatbomb.events.ChatMessageEvent;
-import com.mastereric.chatbomb.init.ModAchivements;
-import com.mastereric.chatbomb.init.ModCompat;
-import com.mastereric.chatbomb.init.ModConfig;
+import com.mastereric.chatbomb.init.*;
 import com.mastereric.chatbomb.util.LogUtility;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -19,8 +17,11 @@ public class CommonProxy {
 		LogUtility.info("Performing common initialization.");
 		// Add achievements.
 		ModAchivements.initializeAchievements();
+		ModBlocks.initializeBlocks();
+        ModRecipes.initializeCraftingRecipes();
+        ModEntities.initializeEntities();
 
-		ModConfig.config = new Configuration(new File(event.getModConfigurationDirectory().getPath(), "meta.cfg"));
+		ModConfig.config = new Configuration(new File(event.getModConfigurationDirectory().getPath(), "chatbomb.cfg"));
 		ModConfig.parseConfig();
 	}
 
