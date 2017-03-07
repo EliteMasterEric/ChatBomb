@@ -15,7 +15,7 @@ public class ChatMessageEvent {
     public void onServerChatEvent(ServerChatEvent event) {
         Matcher m = Reference.REGEX_CHAT_BOMB.matcher(event.getMessage().toLowerCase());
         if(m.find()) {
-            String triggerWord = m.group(0);
+            String triggerWord = m.group(1);
             LogUtility.info("Triggered! %s", triggerWord);
             explodeInRadius(event, new BlockPos(event.getPlayer().getPosition()), 8, 4, triggerWord);
         }
