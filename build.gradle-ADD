@@ -1,0 +1,10 @@
+repositories {
+  maven {
+    name "Cyclops Repo"
+    url "https://dl.bintray.com/cyclopsmc/dev/"
+  }
+}
+
+dependencies {
+  deobfCompile "org.cyclops.commoncapabilities:CommonCapabilities:${mc_version}-${mod_version}"
+}

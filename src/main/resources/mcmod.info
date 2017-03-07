@@ -1,0 +1,16 @@
+[
+{
+  "modid": "chatbomb",
+  "name": "ChatBomb",
+  "description": "Adds a variant of TNT activated with a command in chat.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["EliteMasterEric"],
+  "credits": "Thanks to the Minecraft Mod Development Discord for the help, tips, and advice!",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["compatlayer"]
+}
+]
