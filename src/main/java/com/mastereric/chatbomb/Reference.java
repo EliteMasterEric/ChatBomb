@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class Reference {
 	public static final String MOD_ID       = "chatbomb";
-	public static final String MOD_VERSION  = "1.0";
+	public static final String MOD_VERSION  = "1.0.1";
 	public static final String MC_VERSION = "[1.10.2, 1.11.2]";
 	public static final String DEPENDENCIES = "required-after:compatlayer";
 	public static final String CLIENT_PROXY = "com.mastereric.chatbomb.proxy.ClientProxy";
