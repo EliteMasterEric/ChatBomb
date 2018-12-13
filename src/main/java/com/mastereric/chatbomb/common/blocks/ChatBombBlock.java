@@ -14,6 +14,8 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.TranslatableTextComponent;
@@ -49,7 +51,7 @@ public class ChatBombBlock extends Block {
       Chat Bomb default detonation logic.
      */
 
-    public void primeTnt(World world, BlockPos blockPos, LivingEntity primer) {
+    public void primeTnt(World world, BlockPos blockPos, LivingEntity primer, boolean fast) {
         if (!world.isRemote) {
             if (primer instanceof PlayerEntity) {
                 grantTriggerAdvancement((PlayerEntity) primer);
@@ -57,9 +59,14 @@ public class ChatBombBlock extends Block {
             PrimedChatBombEntity primedChatBombEntity = new PrimedChatBombEntity(world,
                     (double)((float)blockPos.getX() + 0.5F), (double)blockPos.getY(),
                     (double)((float)blockPos.getZ() + 0.5F), primer);
-            primedChatBombEntity.setFuse((short)(world.random.nextInt(primedChatBombEntity.getFuseTimer() / 4)
-                    + primedChatBombEntity.getFuseTimer() / 8));
+            if (fast) {
+                // TNT destroyed by explosions has a shortened fuse.
+                primedChatBombEntity.setFuse((short)(world.random.nextInt(primedChatBombEntity.getFuseTimer() / 4)
+                        + primedChatBombEntity.getFuseTimer() / 8));
+            }
             world.spawnEntity(primedChatBombEntity);
+            world.playSound(null, primedChatBombEntity.x, primedChatBombEntity.y, primedChatBombEntity.z,
+                    SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCK, 1.0F, 1.0F);
         }
     }
 
@@ -76,7 +83,7 @@ public class ChatBombBlock extends Block {
             return;
         }
         if (world.isReceivingRedstonePower(pos)) {
-            this.primeTnt(world, pos, null);
+            this.primeTnt(world, pos, null, false);
             world.clearBlockState(pos);
         }
     }
@@ -93,7 +100,7 @@ public class ChatBombBlock extends Block {
     public void neighborUpdate(final BlockState state, final World world, final BlockPos pos, final Block block,
                                final BlockPos neighborPos) {
         if (world.isReceivingRedstonePower(pos)) {
-            this.primeTnt(world, pos, null);
+            this.primeTnt(world, pos, null, false);
             world.clearBlockState(pos);
         }
     }
@@ -108,7 +115,7 @@ public class ChatBombBlock extends Block {
     @Override
     public void onBreak(final World world, final BlockPos pos, final BlockState state, final PlayerEntity player) {
         if (!world.isRemote() && !player.isCreative() && state.<Boolean>get(ChatBombBlock.UNSTABLE)) {
-            this.primeTnt(world, pos, null);
+            this.primeTnt(world, pos, null, false);
         }
         super.onBreak(world, pos, state, player);
     }
@@ -124,7 +131,7 @@ public class ChatBombBlock extends Block {
         if (world.isRemote) {
             return;
         }
-        this.primeTnt(world, pos, explosion.getCausingEntity());
+        this.primeTnt(world, pos, explosion.getCausingEntity(), true);
     }
 
     /**
@@ -147,7 +154,7 @@ public class ChatBombBlock extends Block {
         final ItemStack vItemStack11 = player.getStackInHand(hand);
         final Item vItem12 = vItemStack11.getItem();
         if (vItem12 == Items.FLINT_AND_STEEL || vItem12 == Items.FIRE_CHARGE) {
-            this.primeTnt(world, pos, player);
+            this.primeTnt(world, pos, player, false);
             world.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
             if (vItem12 == Items.FLINT_AND_STEEL) {
                 vItemStack11.applyDamage(1, player);
@@ -165,7 +172,7 @@ public class ChatBombBlock extends Block {
             final ProjectileEntity projectileEntity = (ProjectileEntity)entity;
             final Entity igniter = projectileEntity.getOwner();
             if (projectileEntity.isOnFire()) {
-                this.primeTnt(world, pos, (igniter instanceof LivingEntity) ? ((LivingEntity)igniter) : null);
+                this.primeTnt(world, pos, (igniter instanceof LivingEntity) ? ((LivingEntity)igniter) : null, false);
                 world.clearBlockState(pos);
             }
         }
@@ -181,6 +188,9 @@ public class ChatBombBlock extends Block {
      * @param chatMessage
      */
     public static void evaluateChatMessage(PlayerEntity player, String chatMessage) {
+        if (chatMessage.startsWith("/"))
+            return; // Don't trigger for commands.
+
         Matcher m = REGEX_PATTERN.matcher(chatMessage.toLowerCase());
         if (m.find()) {
             String triggerWord;
@@ -218,7 +228,7 @@ public class ChatBombBlock extends Block {
         for (BlockPos blockPos : BlockPos.iterateBoxPositions(corner1, corner2)) {
             if (world.getBlockState(blockPos).getBlock() == ChatBomb.Blocks.CHAT_BOMB) {
                 announceExplosion(igniter, triggerWord);
-                ((ChatBombBlock) ChatBomb.Blocks.CHAT_BOMB).primeTnt(world, blockPos, igniter);
+                ((ChatBombBlock) ChatBomb.Blocks.CHAT_BOMB).primeTnt(world, blockPos, igniter, false);
                 world.clearBlockState(blockPos);
             }
         }

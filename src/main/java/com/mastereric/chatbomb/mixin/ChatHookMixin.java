@@ -36,11 +36,11 @@ public abstract class ChatHookMixin {
      * https://github.com/SpongePowered/Mixin/wiki/Advanced-Mixin-Usage---Callback-Injectors
      * http://jenkins.liteloader.com/view/Other/job/Mixin/javadoc/org/spongepowered/asm/util/Locals.html
 	 */
-	@Inject(method = "onChatMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;broadcastChatMessage(Lnet/minecraft/text/TextComponent;Z)V"),
-    locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-	private void captureChatMessage(ChatMessageServerPacket inputPacket, CallbackInfo callbackInfo, String chatMessageString, TextComponent chatMessageTextComponent) {
-		LogUtility.info("Captured chat message: %s", chatMessageString);
-        ChatBombBlock.evaluateChatMessage(player, chatMessageString);
+	@Inject(method = "onChatMessage", at = @At("TAIL"),
+        locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+	private void captureChatMessage(ChatMessageServerPacket inputPacket, CallbackInfo callbackInfo) {
+		LogUtility.info("Captured chat message: %s", inputPacket.method_12114());
+        ChatBombBlock.evaluateChatMessage(player, inputPacket.method_12114());
 	}
 
 	/*
@@ -50,5 +50,8 @@ public abstract class ChatHookMixin {
 	TAIL: inject the callback immediately before the final return call in the target method (i.e. at the end)
 	INVOKE: inject the callback immediately before a given target method is executed
 	Note that 'at = ' is an array, so multiple @At can be specified.
+
+	Old invoke:
+	at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;broadcastChatMessage(Lnet/minecraft/text/TextComponent;Z)V"
 	 */
 }
