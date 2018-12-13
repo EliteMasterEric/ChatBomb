@@ -1,0 +1,10 @@
+{
+  "id": "chatbomb",
+  "name": "ChatBomb",
+  "version": "1.2.0-fabric",
+  "side": "universal",
+  "initializer": "com.mastereric.chatbomb.ChatBomb",
+  "mixins": {
+    "common": "chatbomb.common.json"
+  }
+}

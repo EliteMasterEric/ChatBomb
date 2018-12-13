@@ -1,0 +1,5 @@
+{
+    "block.chatbomb.chatbomb": "Chat Bomb",
+    "block.chatbomb.chatbomb.desc": "Watch your words near this thing...",
+    "block.chatbomb.chatbomb.trigger": "Did somebody say §l§4%%s§r?"
+}

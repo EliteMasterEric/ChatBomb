@@ -1,0 +1,14 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "WGW",
+        "GNG",
+        "WGW"
+    ],
+    "key": {
+        "W": { "item": "minecraft:wool" },
+        "G": { "item": "minecraft:gunpowder" },
+        "N": { "item": "minecraft:noteblock" }
+    },
+    "result": { "item": "chatbomb:chatbomb" }
+}

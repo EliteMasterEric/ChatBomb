@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.mastereric.chatbomb.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ChatHookMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
