@@ -22,6 +22,7 @@ public class PrimedChatBombEntityRenderer extends EntityRenderer<PrimedChatBombE
         this.field_4673 = 0.5F;
     }
 
+    @Override
     public void method_4135(PrimedChatBombEntity chatBombEntity, double var2, double var4, double var6, float var8, float var9) {
         BlockRenderManager blockRenderManager = MinecraftClient.getInstance().getBlockRenderManager();
         GlStateManager.pushMatrix();

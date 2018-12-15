@@ -1,0 +1,45 @@
+{
+  "display": {
+    "icon": {
+      "item": "chatbomb:chatbomb"
+    },
+    "title": {
+      "translate": "advancements.chatbomb.root"
+    },
+    "description": {
+      "translate": "advancements.chatbomb.root.desc"
+    },
+    "background": "minecraft:textures/block/bricks.png",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "rewards": {
+    "recipes": [
+      "chatbomb:chatbomb"
+    ]
+  },
+  "criteria": {
+    "has_gunpowder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:gunpowder"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "chatbomb:chatbomb"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gunpowder",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,5 +1,11 @@
 {
     "block.chatbomb.chatbomb": "Chat Bomb",
-    "block.chatbomb.chatbomb.desc": "Watch your words near this thing...",
-    "block.chatbomb.chatbomb.trigger": "<Chat Bomb> Did somebody say §l§4%s§r?"
+    "block.chatbomb.chatbomb.desc": "It's on a hair trigger...",
+    "block.chatbomb.chatbomb.trigger": "<Chat Bomb> Did somebody say §l§4%s§r?",
+    "advancements.chatbomb.root": "Chat Bomb",
+    "advancements.chatbomb.root.desc": "Watch your words near this thing...",
+    "advancements.chatbomb.obtain": "Explosive Personality",
+    "advancements.chatbomb.obtain.desc": "Craft a Chat Bomb",
+    "advancements.chatbomb.trigger": "Prime Suspect",
+    "advancements.chatbomb.trigger.desc": "Trigger a Chat Bomb"
 }

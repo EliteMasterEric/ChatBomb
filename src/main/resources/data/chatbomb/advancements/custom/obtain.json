@@ -1,0 +1,35 @@
+{
+  "parent": "chatbomb:custom/root",
+  "display": {
+    "icon": {
+      "item": "chatbomb:chatbomb"
+    },
+    "title": {
+      "translate": "advancements.chatbomb.obtain"
+    },
+    "description": {
+      "translate": "advancements.chatbomb.obtain.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_chatbomb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "chatbomb:chatbomb"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_chatbomb"
+    ]
+  ]
+}
