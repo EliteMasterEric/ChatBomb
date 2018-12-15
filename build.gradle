@@ -15,5 +15,5 @@ dependencies {
 	minecraft "com.mojang:minecraft:18w50a"
 	mappings "net.fabricmc:yarn:18w50a.+"
 	modCompile "net.fabricmc:fabric-loader:0.2.0.70"
-	modCompile "net.fabricmc:fabric:0.1.1.52"
+	modCompile "net.fabricmc:fabric:0.1.1.+"
 }

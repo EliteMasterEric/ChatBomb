@@ -6,9 +6,9 @@
         "WGW"
     ],
     "key": {
-        "W": { "item": "minecraft:wool" },
+        "W": { "tag": "minecraft:wool" },
         "G": { "item": "minecraft:gunpowder" },
-        "N": { "item": "minecraft:noteblock" }
+        "N": { "item": "minecraft:note_block" }
     },
     "result": { "item": "chatbomb:chatbomb" }
 }

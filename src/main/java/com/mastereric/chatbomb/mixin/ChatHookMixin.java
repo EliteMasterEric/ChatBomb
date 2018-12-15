@@ -39,8 +39,8 @@ public abstract class ChatHookMixin {
 	@Inject(method = "onChatMessage", at = @At("TAIL"),
         locals = LocalCapture.CAPTURE_FAILEXCEPTION)
 	private void captureChatMessage(ChatMessageServerPacket inputPacket, CallbackInfo callbackInfo) {
-		LogUtility.info("Captured chat message: %s", inputPacket.method_12114());
-        ChatBombBlock.evaluateChatMessage(player, inputPacket.method_12114());
+		LogUtility.info("Captured chat message: %s", inputPacket.getChatMessage());
+        ChatBombBlock.evaluateChatMessage(player, inputPacket.getChatMessage());
 	}
 
 	/*

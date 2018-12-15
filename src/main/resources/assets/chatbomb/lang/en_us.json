@@ -7,5 +7,7 @@
     "advancements.chatbomb.obtain": "Explosive Personality",
     "advancements.chatbomb.obtain.desc": "Craft a Chat Bomb",
     "advancements.chatbomb.trigger": "Prime Suspect",
-    "advancements.chatbomb.trigger.desc": "Trigger a Chat Bomb"
+    "advancements.chatbomb.trigger.desc": "Trigger a Chat Bomb",
+    "death.attack.chatbomb": "%1$s should have chosen their words wisely...",
+    "death.attack.chatbomb.player": "%1$s should have chosen their words wisely around %2$s..."
 }

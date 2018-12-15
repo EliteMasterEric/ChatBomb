@@ -3,20 +3,24 @@ package com.mastereric.chatbomb;
 import com.mastereric.chatbomb.client.PrimedChatBombEntityRenderer;
 import com.mastereric.chatbomb.common.blocks.ChatBombBlock;
 import com.mastereric.chatbomb.common.entity.PrimedChatBombEntity;
+import com.mastereric.chatbomb.common.entity.damage.ChatBombDamageSource;
 import com.mastereric.chatbomb.common.items.DescBlockItem;
 import com.mastereric.chatbomb.util.LogUtility;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.client.render.EntityRendererRegistry;
 import net.fabricmc.fabric.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ChatBomb implements ModInitializer {
+public class ChatBomb implements ModInitializer, ClientModInitializer {
+
     public abstract static class Blocks {
 
         public static Block CHAT_BOMB;
@@ -47,14 +51,23 @@ public class ChatBomb implements ModInitializer {
             CHAT_BOMB = registerEntity(PrimedChatBombEntity.class, "chatbomb");
         }
 
+        static void initializeEntityRenderers() {
+            LogUtility.info("Initializing entity renderers...");
+            registerEntityRenderer(PrimedChatBombEntity.class, (ctx, ctx2) -> new PrimedChatBombEntityRenderer(ctx));
+        }
+
         static EntityType registerEntity(Class<? extends Entity> entityClass, String name) {
-            EntityType<?> entity = FabricEntityTypeBuilder.create(
-                    PrimedChatBombEntity.class, PrimedChatBombEntity::new).build(name);
+            EntityType<?> entity = FabricEntityTypeBuilder.create(entityClass).build();
             Registry.register(Registry.ENTITY_TYPE, new Identifier(Reference.MOD_ID, name), entity);
-            EntityRendererRegistry.INSTANCE.register(entityClass, (ctx, ctx2) -> new PrimedChatBombEntityRenderer(ctx));
             return entity;
         }
+
+        static void registerEntityRenderer(Class<? extends Entity> entityClass, EntityRendererRegistry.Factory factory) {
+            EntityRendererRegistry.INSTANCE.register(entityClass, factory);
+        }
     }
+
+    public static final DamageSource CHATBOMB_DAMAGE = new ChatBombDamageSource();
 
 	@Override
 	public void onInitialize() {
@@ -66,4 +79,9 @@ public class ChatBomb implements ModInitializer {
         Blocks.initializeBlocks();
         Entities.initializeEntities();
 	}
+
+    @Override
+    public void onInitializeClient() {
+        Entities.initializeEntityRenderers();
+    }
 }

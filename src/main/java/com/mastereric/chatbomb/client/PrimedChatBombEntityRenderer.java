@@ -12,6 +12,7 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
@@ -23,7 +24,7 @@ public class PrimedChatBombEntityRenderer extends EntityRenderer<PrimedChatBombE
     }
 
     @Override
-    public void method_4135(PrimedChatBombEntity chatBombEntity, double var2, double var4, double var6, float var8, float var9) {
+    public void method_3936(PrimedChatBombEntity chatBombEntity, double var2, double var4, double var6, float var8, float var9) {
         BlockRenderManager blockRenderManager = MinecraftClient.getInstance().getBlockRenderManager();
         GlStateManager.pushMatrix();
         GlStateManager.translatef((float)var2, (float)var4 + 0.5F, (float)var6);

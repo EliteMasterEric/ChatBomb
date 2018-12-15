@@ -16,8 +16,8 @@ public class DescBlockItem extends BlockItem {
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, World world, List<TextComponent> descList, TooltipOptions tooltipOptions) {
-        super.addInformation(itemStack, world, descList, tooltipOptions);
+    public void buildTooltip(ItemStack itemStack, World world, List<TextComponent> descList, TooltipOptions tooltipOptions) {
+        super.buildTooltip(itemStack, world, descList, tooltipOptions);
         descList.add(new TranslatableTextComponent(this.getTranslationKey() + ".desc"));
     }
 }
