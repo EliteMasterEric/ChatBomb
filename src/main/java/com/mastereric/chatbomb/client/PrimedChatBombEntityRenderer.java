@@ -72,11 +72,4 @@ public class PrimedChatBombEntityRenderer extends EntityRenderer<PrimedChatBombE
     protected Identifier getTexture(PrimedChatBombEntity var1) {
         return SpriteAtlasTexture.BLOCK_ATLAS_TEX;
     }
-
-    public static class PrimedChatBombEntityRendererFactory implements EntityRendererRegistry.Factory {
-        @Override
-        public EntityRenderer<? extends Entity> create(EntityRenderDispatcher entityRenderDispatcher, EntityRendererRegistry.Context context) {
-            return new PrimedChatBombEntityRenderer(entityRenderDispatcher);
-        }
-    }
 }

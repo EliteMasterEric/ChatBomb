@@ -1,10 +1,8 @@
 package com.mastereric.chatbomb.common.entity;
 
 import com.mastereric.chatbomb.ChatBomb;
-import com.mastereric.chatbomb.util.LogUtility;
 import com.sun.istack.internal.Nullable;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.data.DataTracker;
@@ -13,7 +11,6 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
-import sun.rmi.runtime.Log;
 
 public class PrimedChatBombEntity extends Entity
 {

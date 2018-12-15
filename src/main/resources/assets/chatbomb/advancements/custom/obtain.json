@@ -1,0 +1,33 @@
+{
+    "display": {
+        "icon": {
+          "item": "chatbomb:chatbomb"
+        },
+        "title": {
+          "translate": "advancements.chatbomb.obtain"
+        },
+        "description": {
+          "translate": "advancements.chatbomb.obtain.desc"
+        },
+        "frame": "task",
+        "show_toast": true
+    },
+    "criteria": {
+        "has_gunpowder": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [ { "item": "minecraft:gunpowder" } ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": { "recipe": "chatbomb:chatbomb" }
+        }
+    },
+    "requirements": [
+        [
+            "has_redstone",
+            "has_the_recipe"
+        ]
+    ]
+}

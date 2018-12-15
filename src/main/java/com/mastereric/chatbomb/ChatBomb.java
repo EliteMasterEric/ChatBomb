@@ -44,15 +44,15 @@ public class ChatBomb implements ModInitializer {
 
         static void initializeEntities() {
             LogUtility.info("Initializing entities...");
-            CHAT_BOMB = registerEntity(PrimedChatBombEntity.class,
-                    new PrimedChatBombEntityRenderer.PrimedChatBombEntityRendererFactory(), "chatbomb");
+            CHAT_BOMB = registerEntity(PrimedChatBombEntity.class, "chatbomb");
         }
 
-        static EntityType registerEntity(Class<? extends Entity> entityClass,
-                                         EntityRendererRegistry.Factory rendererFactory, String name) {
-            EntityRendererRegistry.INSTANCE.register(entityClass, rendererFactory);
-            return Registry.register(Registry.ENTITY_TYPE, new Identifier(Reference.MOD_ID, name),
-                    FabricEntityTypeBuilder.create(entityClass).build(name));
+        static EntityType registerEntity(Class<? extends Entity> entityClass, String name) {
+            EntityType<?> entity = FabricEntityTypeBuilder.create(
+                    PrimedChatBombEntity.class, PrimedChatBombEntity::new).build(name);
+            Registry.register(Registry.ENTITY_TYPE, new Identifier(Reference.MOD_ID, name), entity);
+            EntityRendererRegistry.INSTANCE.register(entityClass, (ctx, ctx2) -> new PrimedChatBombEntityRenderer(ctx));
+            return entity;
         }
     }
 
