@@ -19,7 +19,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ChatBomb implements ModInitializer, ClientModInitializer {
+public class ChatBomb implements ModInitializer {
 
     public abstract static class Blocks {
 
@@ -51,7 +51,7 @@ public class ChatBomb implements ModInitializer, ClientModInitializer {
             CHAT_BOMB = registerEntity(PrimedChatBombEntity.class, "chatbomb");
         }
 
-        static void initializeEntityRenderers() {
+        public static void initializeEntityRenderers() {
             LogUtility.info("Initializing entity renderers...");
             registerEntityRenderer(PrimedChatBombEntity.class, (ctx, ctx2) -> new PrimedChatBombEntityRenderer(ctx));
         }
@@ -79,9 +79,4 @@ public class ChatBomb implements ModInitializer, ClientModInitializer {
         Blocks.initializeBlocks();
         Entities.initializeEntities();
 	}
-
-    @Override
-    public void onInitializeClient() {
-        Entities.initializeEntityRenderers();
-    }
 }

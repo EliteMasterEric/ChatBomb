@@ -1,9 +1,24 @@
 {
   "id": "chatbomb",
   "name": "ChatBomb",
+  "description": "This block is on a short fuse. If you say any trigger words near it, it'll EXPLODE!",
+  "authors": [
+    "EliteMasterEric"
+  ],
+  "links": {
+    "homepage": "https://minecraft.curseforge.com/projects/chat-bomb",
+    "issues": "https://github.com/MasterEric/ChatBomb/issues",
+    "sources": "https://github.com/MasterEric/ChatBomb"
+  },
   "version": "1.2.0-fabric",
   "side": "universal",
-  "initializer": "com.mastereric.chatbomb.ChatBomb",
+  "initializers": [
+    "com.mastereric.chatbomb.ChatBomb",
+    "com.mastereric.chatbomb.client.ClientChatBomb"
+  ],
+  "requires": {
+    "fabric": "*"
+  },
   "mixins": {
     "common": "chatbomb.common.json"
   }
