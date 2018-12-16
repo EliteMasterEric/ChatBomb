@@ -13,6 +13,11 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.UUID;
 
+/**
+ * Packet sent to the client to tell it to spawn a copy of the entity on the server.
+ * This is done for you for EntityLiving, and hopefully Fabric will do it automatically for all entities,
+ * but for now, non-living entities require custom networking code.
+ */
 public class PrimedChatBombEntitySpawnClientPacket extends CustomPayloadClientPacket {
     private int id;
     private UUID uuid;

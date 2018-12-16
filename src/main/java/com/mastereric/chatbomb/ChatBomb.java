@@ -61,18 +61,24 @@ public class ChatBomb implements ModInitializer {
         }
 
         public static void initializeEntityRenderers() {
+            // Entity renderer code should only be run on the Client.
             LogUtility.info("Initializing entity renderers...");
             registerEntityRenderer(PrimedChatBombEntity.class, (ctx, ctx2) -> new PrimedChatBombEntityRenderer(ctx));
         }
 
         static EntityType registerEntity(Class<? extends Entity> entityClass, String name,
                                          BiConsumer<PacketContext, PacketByteBuf> packetHandler) {
+            // Use this only for living entities that don't require tracking.
             return registerEntity(entityClass, name, packetHandler, -1, -1, false);
         }
 
         static EntityType registerEntity(Class<? extends Entity> entityClass, String name,
                                          BiConsumer<PacketContext, PacketByteBuf> packetHandler,
                                          int trackingDistance, int updateIntervalTicks, boolean alwaysUpdateVelocity) {
+            // Manually enabling tracking is required for non-living entities.
+            // trackingDistance represents how close the player must be for the entity to be tracked.
+            //
+            // updateInvervalTicks represents how many ticks between updates there are.
             boolean tracking = trackingDistance != -1 || updateIntervalTicks != -1 || alwaysUpdateVelocity;
 
             FabricEntityTypeBuilder builder = FabricEntityTypeBuilder.create(entityClass);
@@ -97,6 +103,9 @@ public class ChatBomb implements ModInitializer {
         }
     }
 
+    /**
+     * Custom damage source, used for Chat Bomb messages.
+     */
     public static final DamageSource CHATBOMB_DAMAGE = new ChatBombDamageSource();
 
 	@Override
