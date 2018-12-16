@@ -1,11 +1,13 @@
 package com.mastereric.chatbomb.client.network;
 
+import com.mastereric.chatbomb.Reference;
 import com.mastereric.chatbomb.common.entity.PrimedChatBombEntity;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.packet.CustomPayloadClientPacket;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.MathHelper;
 
@@ -22,8 +24,10 @@ public class PrimedChatBombEntitySpawnClientPacket extends CustomPayloadClientPa
     private int velocityZ;
     private int pitch;
     private int yaw;
+    private Identifier channel2;
 
     public PrimedChatBombEntitySpawnClientPacket(PacketByteBuf packetByteBuf) {
+        super(new Identifier(Reference.MOD_ID, "spawn_chatbomb"), packetByteBuf);
         this.read(packetByteBuf);
     }
 
@@ -32,6 +36,7 @@ public class PrimedChatBombEntitySpawnClientPacket extends CustomPayloadClientPa
     }
 
     public PrimedChatBombEntitySpawnClientPacket(PrimedChatBombEntity primedChatBombEntity) {
+        this.channel2 = new Identifier(Reference.MOD_ID, "spawn_chatbomb");
         this.id = primedChatBombEntity.getEntityId();
         this.uuid = primedChatBombEntity.getUuid();
         this.x = primedChatBombEntity.x;
@@ -42,6 +47,11 @@ public class PrimedChatBombEntitySpawnClientPacket extends CustomPayloadClientPa
         this.velocityX = (int)(MathHelper.clamp(primedChatBombEntity.velocityX, -3.9D, 3.9D) * 8000.0D);
         this.velocityY = (int)(MathHelper.clamp(primedChatBombEntity.velocityY, -3.9D, 3.9D) * 8000.0D);
         this.velocityZ = (int)(MathHelper.clamp(primedChatBombEntity.velocityZ, -3.9D, 3.9D) * 8000.0D);
+    }
+
+    @Override
+    public Identifier getChannel() {
+        return this.channel2;
     }
 
     public void read(PacketByteBuf var1) {

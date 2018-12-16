@@ -4,8 +4,6 @@ import com.mastereric.chatbomb.common.entity.PrimedChatBombEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.networking.PacketContext;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.network.NetworkThreadUtils;
 import net.minecraft.util.PacketByteBuf;
 
 @Environment(EnvType.CLIENT)
@@ -13,9 +11,8 @@ public abstract class ChatBombNetworkHandler {
     public static void handlePrimedChatBombEntitySpawnClientPacket(PacketContext packetContext, PacketByteBuf packetByteBuf) {
         PrimedChatBombEntitySpawnClientPacket packet
                 = new PrimedChatBombEntitySpawnClientPacket(packetByteBuf);
-
-        NetworkThreadUtils.forceMainThread(packet, MinecraftClient.getInstance().getNetworkHandler(), MinecraftClient.getInstance());
-
+        //NetworkThreadUtils.forceMainThread(packet, MinecraftClient.getInstance().getNetworkHandler(), MinecraftClient.getInstance());
+        
         // Copied logic from net.minecraft.client.network.ClientPlayNetworkHandler.onEntitySpawn
         PrimedChatBombEntity entity = new PrimedChatBombEntity(packetContext.getPlayer().getEntityWorld(),
                 packet.getX(), packet.getY(), packet.getZ(), null);
