@@ -114,6 +114,7 @@ public class ChatBomb implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
         LogUtility.info("Initializing Chat Bomb %s.", Reference.MOD_VERSION);
+        LogUtility.printLogLevel();
 
         Blocks.initializeBlocks();
         Entities.initializeEntities();

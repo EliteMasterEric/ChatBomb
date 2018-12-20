@@ -1,6 +1,7 @@
 package com.mastereric.chatbomb.client.network;
 
 import com.mastereric.chatbomb.common.entity.PrimedChatBombEntity;
+import com.mastereric.chatbomb.util.LogUtility;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.networking.PacketContext;
@@ -13,6 +14,9 @@ public abstract class ChatBombNetworkHandler {
     public static void handlePrimedChatBombEntitySpawnClientPacket(PacketContext packetContext, PacketByteBuf packetByteBuf) {
         PrimedChatBombEntitySpawnClientPacket packet
                 = new PrimedChatBombEntitySpawnClientPacket(packetByteBuf);
+
+        LogUtility.debug("Client spawning server-designated Chat Bomb entity, at pos (%f, %f, %f)",
+                packet.getX(), packet.getY(), packet.getZ());
 
         // Copied logic from net.minecraft.client.network.ClientPlayNetworkHandler.onEntitySpawn
         PrimedChatBombEntity entity = new PrimedChatBombEntity(packetContext.getPlayer().getEntityWorld(),

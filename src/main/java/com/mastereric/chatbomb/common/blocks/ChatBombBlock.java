@@ -25,6 +25,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 
+import javax.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,8 +52,10 @@ public class ChatBombBlock extends Block {
       Chat Bomb default detonation logic.
      */
 
-    public void primeTnt(World world, BlockPos blockPos, LivingEntity primer, boolean fast) {
-        if (!world.isRemote) {
+    public void primeTnt(World world, BlockPos blockPos, @Nullable LivingEntity primer, boolean fast) {
+        if (!world.isClient()) {
+            LogUtility.debug("Priming Chat Bomb on server with igniter '%s', position (%s, %s, %s)",
+                    (primer == null ? "null" : primer.getDisplayName().getFormattedText()), blockPos.getX(), blockPos.getY(), blockPos.getZ());
             if (primer instanceof PlayerEntity) {
                 grantTriggerAdvancement((PlayerEntity) primer);
             }
@@ -64,6 +67,8 @@ public class ChatBombBlock extends Block {
                 primedChatBombEntity.setFuse((short)(world.random.nextInt(primedChatBombEntity.getFuseTimer() / 4)
                         + primedChatBombEntity.getFuseTimer() / 8));
             }
+            LogUtility.debug("Spawning Chat Bomb entity (id '%d', uuid '%s')",
+                    primedChatBombEntity.getEntityId(), primedChatBombEntity.getUuidAsString());
             world.spawnEntity(primedChatBombEntity);
             world.playSound(null, primedChatBombEntity.x, primedChatBombEntity.y, primedChatBombEntity.z,
                     SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCK, 1.0F, 1.0F);
@@ -114,7 +119,7 @@ public class ChatBombBlock extends Block {
      */
     @Override
     public void onBreak(final World world, final BlockPos pos, final BlockState state, final PlayerEntity player) {
-        if (!world.isRemote() && !player.isCreative() && state.<Boolean>get(ChatBombBlock.UNSTABLE)) {
+        if (!world.isClient() && !player.isCreative() && state.<Boolean>get(ChatBombBlock.UNSTABLE)) {
             this.primeTnt(world, pos, null, false);
         }
         super.onBreak(world, pos, state, player);
@@ -128,7 +133,7 @@ public class ChatBombBlock extends Block {
      */
     @Override
     public void onDestroyedByExplosion(final World world, final BlockPos pos, final Explosion explosion) {
-        if (world.isRemote) {
+        if (world.isClient()) {
             return;
         }
         this.primeTnt(world, pos, explosion.getCausingEntity(), true);
@@ -168,7 +173,7 @@ public class ChatBombBlock extends Block {
 
     @Override
     public void onEntityCollision(final BlockState state, final World world, final BlockPos pos, final Entity entity) {
-        if (!world.isRemote && entity instanceof ProjectileEntity) {
+        if (!world.isClient() && entity instanceof ProjectileEntity) {
             final ProjectileEntity projectileEntity = (ProjectileEntity)entity;
             final Entity igniter = projectileEntity.getOwner();
             if (projectileEntity.isOnFire()) {
@@ -198,7 +203,7 @@ public class ChatBombBlock extends Block {
                 triggerWord = m.group(1);
             else
                 triggerWord = m.group(0);
-            LogUtility.info("Chat Bomb trigger detected: %s", triggerWord);
+            LogUtility.info("Chat Bomb trigger word detected: %s", triggerWord);
             detonateChatBombs(player.getEntityWorld(), new BlockPos(player.getPos()), RADIUS, player, triggerWord);
         }
     }
@@ -225,8 +230,12 @@ public class ChatBombBlock extends Block {
      */
     public static void detonateChatBombsWithinAABB(World world, BlockPos corner1, BlockPos corner2,
                                                    PlayerEntity igniter, String triggerWord) {
+        LogUtility.debug("Detecting Chat Bombs within AABB: (%d, %d, %d) -> (%d, %d, %d)",
+                corner1.getX(), corner1.getY(), corner1.getZ(), corner2.getX(), corner2.getY(), corner2.getZ());
         for (BlockPos blockPos : BlockPos.iterateBoxPositions(corner1, corner2)) {
             if (world.getBlockState(blockPos).getBlock() == ChatBomb.Blocks.CHAT_BOMB) {
+                LogUtility.debug("Triggering explosion by igniter '%s' with trigger word '%s', at position (%d, %d, %d)",
+                        igniter.getDisplayName().getFormattedText(), triggerWord, corner1.getX(), corner1.getY(), corner1.getZ());
                 announceExplosion(igniter, triggerWord);
                 ((ChatBombBlock) ChatBomb.Blocks.CHAT_BOMB).primeTnt(world, blockPos, igniter, false);
                 world.clearBlockState(blockPos);
@@ -240,6 +249,7 @@ public class ChatBombBlock extends Block {
      * @param triggerWord
      */
     public static void announceExplosion(PlayerEntity igniter, String triggerWord) {
+
         if (VERBOSE) {
             igniter.addChatMessage(new TranslatableTextComponent("block.chatbomb.chatbomb.trigger", triggerWord),
                     false);

@@ -42,12 +42,12 @@ public class PrimedChatBombEntityRenderer extends EntityRenderer<PrimedChatBombE
         this.method_3925(chatBombEntity);
         GlStateManager.rotatef(-90.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.translatef(-0.5F, -0.5F, 0.5F);
-        blockRenderManager.render(ChatBomb.Blocks.CHAT_BOMB.getDefaultState(), chatBombEntity.method_5718());
+        blockRenderManager.renderAsItem(ChatBomb.Blocks.CHAT_BOMB.getDefaultState(), chatBombEntity.method_5718());
         GlStateManager.translatef(0.0F, 0.0F, 1.0F);
         if (this.field_4674) {
             GlStateManager.enableColorMaterial();
             GlStateManager.setupSolidRenderingTextureCombine(this.method_3929(chatBombEntity));
-            blockRenderManager.render(ChatBomb.Blocks.CHAT_BOMB.getDefaultState(), 1.0F);
+            blockRenderManager.renderAsItem(ChatBomb.Blocks.CHAT_BOMB.getDefaultState(), 1.0F);
             GlStateManager.tearDownSolidRenderingTextureCombine();
             GlStateManager.disableColorMaterial();
         } else if (chatBombEntity.getFuseTimer() / 5 % 2 == 0) {
@@ -58,7 +58,7 @@ public class PrimedChatBombEntityRenderer extends EntityRenderer<PrimedChatBombE
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, var11);
             GlStateManager.polygonOffset(-3.0F, -3.0F);
             GlStateManager.enablePolygonOffset();
-            blockRenderManager.render(ChatBomb.Blocks.CHAT_BOMB.getDefaultState(), 1.0F);
+            blockRenderManager.renderAsItem(ChatBomb.Blocks.CHAT_BOMB.getDefaultState(), 1.0F);
             GlStateManager.polygonOffset(0.0F, 0.0F);
             GlStateManager.disablePolygonOffset();
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);

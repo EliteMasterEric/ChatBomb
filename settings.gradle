@@ -6,5 +6,6 @@ pluginManagement {
             url = 'http://maven.fabricmc.net/'
         }
         gradlePluginPortal()
+        mavenCentral()
     }
 }

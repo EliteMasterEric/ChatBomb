@@ -1,17 +1,18 @@
 package com.mastereric.chatbomb.common.entity;
 
 import com.mastereric.chatbomb.ChatBomb;
-import com.sun.istack.internal.Nullable;
+import com.mastereric.chatbomb.util.LogUtility;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class PrimedChatBombEntity extends Entity {
     private static final TrackedData<Integer> FUSE;
@@ -27,18 +28,20 @@ public class PrimedChatBombEntity extends Entity {
         this.setSize(0.98F, 0.98F);
     }
 
-    public PrimedChatBombEntity(World var1, double var2, double var4, double var6, @Nullable LivingEntity var8) {
-        this(var1);
-        this.setPosition(var2, var4, var6);
+    public PrimedChatBombEntity(World world, double xPos, double yPos, double zPos, @Nullable LivingEntity igniter) {
+        this(world);
+        LogUtility.debug("Chat Bomb entity instantiated at pos (%f, %f, %s) with igniter '%s'",
+                xPos, yPos, zPos, (igniter == null ? "null" : igniter.getDisplayName().getFormattedText()));
+        this.setPosition(xPos, yPos, zPos);
         float var9 = (float)(Math.random() * 6.2831854820251465D);
         this.velocityX = (double)(-((float)Math.sin((double)var9)) * 0.02F);
         this.velocityY = 0.20000000298023224D;
         this.velocityZ = (double)(-((float)Math.cos((double)var9)) * 0.02F);
         this.setFuse(80);
-        this.prevX = var2;
-        this.prevY = var4;
-        this.prevZ = var6;
-        this.causingEntity = var8;
+        this.prevX = xPos;
+        this.prevY = yPos;
+        this.prevZ = zPos;
+        this.causingEntity = igniter;
     }
 
     protected void initDataTracker() {
@@ -73,8 +76,10 @@ public class PrimedChatBombEntity extends Entity {
 
         --this.fuseTimer;
         if (this.fuseTimer <= 0) {
+            LogUtility.debug("Chat Bomb fuse timer expired at age %d, pos (%f, %f, %f)",
+                    this.age, this.x, this.y, this.z);
             this.invalidate();
-            if (!this.world.isRemote) {
+            if (!this.world.isClient) {
                 this.explode();
             }
         } else {
