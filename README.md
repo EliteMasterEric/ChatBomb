@@ -6,7 +6,7 @@ This block is on a short fuse. If you say any trigger words near it, it'll EXPLO
 
 ## Fabric
 
-This mod is available for new version of Minecraft, including snapshots, using the new Fabric modding API.
+This mod is available for Minecraft 1.14, including snapshots, and requires the Fabric API as a dependency.
 
 ## Contributing
 Any contribution is welcome, be that using the mod, reporting bugs or contributing code.
